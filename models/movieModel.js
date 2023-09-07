@@ -6,10 +6,10 @@ const movieSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        genre: {
-            type: String,
+        genre: [{
+            type:  mongoose.Types.ObjectId,
             required: true,
-        },
+        }],
         description: {
             type: String,
             required: true,
@@ -22,9 +22,10 @@ const movieSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        harga : {
-            type: Array
-        }
+        cast : [{
+            type:  mongoose.Types.ObjectId,
+            required: true,
+        }],
        
         
         
@@ -34,4 +35,6 @@ const movieSchema = mongoose.Schema(
     }
 )
 
-export const Movie = mongoose.model('Movie', movieSchema)
+const Movie = mongoose.model('Movie', movieSchema)
+
+export default Movie
