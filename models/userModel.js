@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
-
+import  Jwt  from "jsonwebtoken";
 
 
 var validateEmail = function(email) {
@@ -37,6 +37,10 @@ const userSchema = mongoose.Schema(
             type: String,
             default: "user",
 
+        },
+        verified: {
+            type: Boolean,
+            default: false
         }
 
     }, {timestamps: true}
@@ -51,6 +55,19 @@ userSchema.pre('save', async function(next){
 userSchema.methods.comparePassword = async function(yourPassword){
     return await bcrypt.compare(yourPassword, this.password)
 }
+
+userSchema.methods.jwtGenerateToken = function () {
+    return Jwt.sign({
+        id: this.id,
+        role : this.role,
+        username: this.username
+    }, process.env.JWT_SECRET, {
+        expiresIn: 3600
+    })
+}
+
+
+
 
 const User = mongoose.model("User", userSchema)
 

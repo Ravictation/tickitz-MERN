@@ -4,6 +4,9 @@ import mongoose from 'mongoose';
 import moviesRoute from "./routes/moviesRoute.js"
 import cors from 'cors'
 import router from "./routes/index.js"
+import dotenv from 'dotenv'
+
+dotenv.config()
 const app = express();
 
 app.use(express.json())
