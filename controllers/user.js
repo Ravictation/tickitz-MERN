@@ -1,10 +1,7 @@
 import User from '../models/userModel.js'
-import UserVerification from '../models/userVerificationModel.js'
 import nodemailer from 'nodemailer'
-import { v4 as uuidv4  } from 'uuid'
-import bcrypt from 'bcrypt'
 import { google } from 'googleapis'
-import jwt from 'jsonwebtoken'
+import jwtGenerateToken from '../library/jwt.js'
 import url from 'url'
 
 const ctrl = {}
@@ -126,7 +123,7 @@ ctrl.signIn= async (req,res) =>{
             })
         }
         
-        const token = await user.jwtGenerateToken()
+        const token = await jwtGenerateToken(username)
         res.status(200).json({
             message:"login success",
             token
@@ -177,5 +174,22 @@ ctrl.verification = async (req,res) =>{
             }
        
         }
+
+ctrl.getUserId = async(req, res ) => {
+    try {
+        const username = req.params.id
+        const user = await User.findOne({username})
+        if(!user||user.length === 0){
+            return res.status(500).json({
+                message:"user not found"
+            })
+        }
+        return res.status(200).json({
+            message: user
+        })
+    } catch (error) {
+        console.log(error.message)
+    }
+}
 
 export default ctrl

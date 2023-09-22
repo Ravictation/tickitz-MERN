@@ -14,7 +14,8 @@ const middleware = (...role) => {
             if (err) {
                 return resp(res, 401, err.message)
             }
-            if (role.includes(decode.data.role) == false) return resp(res, 401, "you don't have access.")
+            console.log(decode.role)
+            if (role.includes(decode.role) == false) return resp(res, 401, "you don't have access.")
             req.data_jwt = decode.data
             return next()
         })

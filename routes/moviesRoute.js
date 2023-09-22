@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.post('/',authCheck('user'), ctrl.addMovie)
-router.get('/', ctrl.getMovie)
+router.get('/',authCheck('user'), ctrl.getMovie)
 router.put('/:id', ctrl.updateMovie)
 router.delete('/:id', ctrl.deleteMovie)
 router.get('/:id', ctrl.getMovieById)

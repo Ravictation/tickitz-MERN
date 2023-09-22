@@ -7,7 +7,7 @@ import express from 'express'
 
 const route = express.Router()
 
-route.use('/', User)
+route.use('/user', User)
 route.use('/movie', Movie)
 route.use('/genre', Genre)
 route.use('/cast', Cast)
